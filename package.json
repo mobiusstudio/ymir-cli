@@ -1,6 +1,6 @@
 {
-  "name": "chaos-cli",
-  "version": "0.1.1",
+  "name": "ymir-cli",
+  "version": "0.1.2",
   "description": "chaos cli, use to generate models",
   "main": "lib/index.js",
   "scripts": {
@@ -8,35 +8,30 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mobiusstudio/chaos-cli.git"
+    "url": "git+https://github.com/mobiusstudio/ymir-cli.git"
   },
   "bin": {
     "chaos": "lib/index.js"
   },
   "keywords": [
     "mobius",
-    "model",
-    "sdk",
-    "sqorn",
     "sql",
-    "chaos"
+    "cli"
   ],
   "author": "Mobiusor",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mobiusstudio/chaos-cli/issues"
+    "url": "https://github.com/mobiusstudio/ymir-cli/issues"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "pg": "^7.8.0",
-    "pg-then": "^1.2.1",
-    "restify-errors": "^6.1.1"
+    "pg-then": "^1.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/register": "^7.0.0"
+    "@babel/preset-env": "^7.2.3"
   },
-  "homepage": "https://github.com/mobiusstudio/chaos-cli#readme"
+  "homepage": "https://github.com/mobiusstudio/ymir-cli#readme"
 }
