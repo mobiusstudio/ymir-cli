@@ -35,7 +35,13 @@ export class DbManager {
     if (result.rowCount === 0) {
       const queryCreate = `CREATE DATABASE "${dbname}"`
       await db.query('postgres', queryCreate)
+      await this.createBasicScipt()
     }
+  }
+
+  async createBasicScipt() {
+    const query = fs.readFileSync(path.resolve(__dirname, '../scripts/init.sql'), 'utf8')
+    await db.query(query)
   }
 
   async getCurrentVersion() {

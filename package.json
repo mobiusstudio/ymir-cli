@@ -1,6 +1,6 @@
 {
   "name": "ymir-cli",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "chaos cli, use to generate models",
   "main": "lib/index.js",
   "scripts": {
