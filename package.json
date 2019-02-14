@@ -1,6 +1,6 @@
 {
   "name": "ymir-cli",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "chaos cli, use to generate models",
   "main": "lib/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/mobiusstudio/ymir-cli.git"
   },
   "bin": {
-    "chaos": "lib/index.js"
+    "ymir": "lib/index.js"
   },
   "keywords": [
     "mobius",

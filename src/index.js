@@ -8,24 +8,25 @@ global.db = db
 const [,, ...args] = process.argv
 
 const help = () => {
-  console.log('Usage: chaos <command> [options]\n')
+  console.log('Usage: ymir <command> [options]\n')
 
   console.log('Options:')
   console.log('-h, --help   \toutput usage information')
   console.log('-V, --version\toutput the version number\n')
 
   console.log('Commands:')
-  console.log('initdb  \tinit db, Usage: chaos initdb <config-file-path>')
-  console.log('updatedb\tupdate db, Usage: chaos updatedb <config-file-path>')
+  console.log('initdb  \tinit db, Usage: ymir initdb <config-file-path>')
+  console.log('updatedb\tupdate db, Usage: ymir updatedb <config-file-path>')
 }
 
 const version = () => {
-  console.log('0.1.2')
+  const config = require('../package.json')
+  console.log(config.version)
 }
 
 const initdb = async () => {
   if (args.length < 2) {
-    console.log('Invalid config file, Usage: chaos initdb <config-file-path>')
+    console.log('Invalid config file, Usage: ymir initdb <config-file-path>')
     return
   }
   const str = fs.readFileSync(args[1], 'utf8')
@@ -37,7 +38,7 @@ const initdb = async () => {
 
 const updatedb = async () => {
   if (args.length < 2) {
-    console.log('Invalid config file, Usage: chaos update <config-file-path>')
+    console.log('Invalid config file, Usage: ymir update <config-file-path>')
     return
   }
   const str = fs.readFileSync(args[1], 'utf8')
@@ -69,7 +70,7 @@ if (args.length === 0) {
     updatedb()
     break
   default:
-    console.log('Invalid command, try chaos --help')
+    console.log('Invalid command, try ymir --help')
   }
 }
 
