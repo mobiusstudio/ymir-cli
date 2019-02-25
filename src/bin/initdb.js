@@ -23,7 +23,7 @@ program
       type: 'input',
       name: 'configPath',
       message: 'please input db config path',
-      default: './api/database/config.json',
+      default: './api/database/db.config.json',
     }]
     inquirer.prompt(questions).then((answers) => {
       const { configPath } = answers
