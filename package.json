@@ -1,6 +1,6 @@
 {
   "name": "ymir-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "ymir command line, api generater & db manager",
   "main": "dist/bin/commander.js",
   "scripts": {
