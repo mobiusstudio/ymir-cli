@@ -18,8 +18,8 @@ export const initdb = async (configPath) => {
 program
   .command('initdb')
   .description('init db with db config')
-  .action((option) => {
-    if (option) initdb(option)
+  .action((configPath) => {
+    if (typeof configPath === 'string') initdb(configPath)
     else {
       const questions = [{
         type: 'input',

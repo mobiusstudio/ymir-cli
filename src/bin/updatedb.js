@@ -21,7 +21,7 @@ program
   .command('updatedb')
   .description('update db with db config')
   .action((configPath) => {
-    if (configPath) updatedb(configPath)
+    if (typeof configPath === 'string') updatedb(configPath)
     else {
       const questions = [{
         type: 'input',

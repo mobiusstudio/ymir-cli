@@ -1,10 +1,11 @@
 {
   "name": "ymir-cli",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "ymir command line, api generater & db manager",
   "main": "dist/bin/commander.js",
   "scripts": {
-    "prepare": "npx babel src --out-dir dist --ignore 'src/template/project/' --copy-files --include-dotfiles"
+    "clear": "rm -rf dist",
+    "prepare": "npm run clear && npx babel src --out-dir dist --ignore 'src/template/project/' --copy-files --include-dotfiles"
   },
   "repository": {
     "type": "git",
