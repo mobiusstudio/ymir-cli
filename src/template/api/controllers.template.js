@@ -2,14 +2,14 @@
 export const template = {}
 
 template.controllers =
-`import { BaseControllers } from './base'
-import { #TableName# } from '../models'
+`import { #BaseControllers# } from './base'
+import { #ModelName# } from '../models'
 
-class #TableControllers# extends BaseControllers {
+class #ClassName# extends #BaseControllers# {
   constructor() {
-    super('#tableName#', #TableName#)
+    super(#superCode#, #ModelName#)
   }
 }
 
-export const #tableName# = new #TableControllers#()
+export const #objName# = new #ClassName#()
 `

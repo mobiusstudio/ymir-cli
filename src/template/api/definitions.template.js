@@ -2,20 +2,20 @@
 export const template = {}
 
 template.definitions =
-`import { BaseDefinitions } from '../../../swagger'
+`import { #BaseDefinitions# } from '../../../swagger'
 import { #propsImport# } from './properties'
 
 const requestBody = {
   #propsName#
 }
 
-class #TableDefinitions# extends BaseDefinitions {
+class #ClassName# extends #BaseDefinitions# {
   constructor() {
-    super('#tableName#', requestBody)
+    super(#superCode#, requestBody)
   }
 }
 
-export const def = new #TableDefinitions#()
+export const def = new #ClassName#()
 `
 
 template.property =

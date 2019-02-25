@@ -2,20 +2,20 @@
 export const template = {}
 
 template.path =
-`import { BaseRoutes, assemblePath, addTag } from '../../../swagger'
+`import { #BaseRoutes#, assemblePath, addTag } from '../../../swagger'
 
-class #TableRoutes# extends BaseRoutes {
+class #ClassName# extends #BaseRoutes# {
   constructor() {
-    super('#tableName#')
+    super(#superCode#)
   }
 }
 
-const routes = new #TableRoutes#()
+const routes = new #ClassName#()
 
-const basePath = '/#tableName#'
+const basePath = '/#basePath#'
 
 addTag({
-  name: '#TableName#',
+  name: '#Tag#',
 })
 
 export const pth = assemblePath(routes, basePath)

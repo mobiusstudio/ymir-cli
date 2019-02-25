@@ -1,27 +1,39 @@
-import { upperFirst } from 'lodash'
+import { upperFirst, camelCase } from 'lodash'
 import { typeMap as T } from 'chaos-library'
 import { template } from '../../template/api'
 import { writeFile } from './generate'
 
 export const apiCode = {}
 
+const indexHelper = (tables, handler) => tables.map((table) => {
+  const { schemaName, tableName } = table
+  const filename = schemaName === tableName ? tableName : `${schemaName}-${tableName}`
+  return handler(filename)
+})
+
 const indexCode = tables => ({
   swagger: {
-    import: tables.map(table => `import ${table.tableName} from './${table.tableName}'`).join('\n'),
-    obj: tables.map(table => `  ${table.tableName}`).join(',\n').concat(','),
+    import: indexHelper(tables, filename => `import ${camelCase(filename)} from './${filename}'`).join('\n'),
+    obj: indexHelper(tables, filename => `  ${camelCase(filename)}`).join(',\n').concat(','),
   },
   controllers: {
-    import: tables.map(table => `import { ${table.tableName} } from './${table.tableName}'`).join('\n'),
-    obj: tables.map(table => `  ...${table.tableName}`).join(',\n').concat(','),
+    import: indexHelper(tables, filename => `import { ${camelCase(filename)} } from './${filename}'`).join('\n'),
+    obj: indexHelper(tables, filename => `  ...${camelCase(filename)}`).join(',\n').concat(','),
   },
 })
 
-apiCode.controllers = (table) => {
-  const { tableName } = table
+apiCode.controllers = (table, isPrimary = true) => {
+  const { schemaName, tableName } = table
+  const fullname = schemaName === tableName ? tableName : `${schemaName}${upperFirst(tableName)}`
+  const baseControllers = isPrimary ? 'BaseControllers' : 'BaseChildControllers'
+  const className = `${isPrimary ? upperFirst(tableName) : upperFirst(fullname)}Controllers`
+  const superCode = isPrimary ? `'${tableName}'` : `'${schemaName}', '${tableName}'`
   return template.controllers
-    .replace(/#tableName#/g, tableName)
-    .replace(/#TableName#/g, `${upperFirst(tableName)}`)
-    .replace(/#TableControllers#/g, `${upperFirst(tableName)}Controllers`)
+    .replace(/#BaseControllers#/g, baseControllers)
+    .replace(/#ModelName#/g, upperFirst(fullname))
+    .replace(/#ClassName#/g, className)
+    .replace(/#superCode#/g, superCode)
+    .replace(/#objName#/g, fullname)
 }
 
 const propsCode = columns => ({
@@ -40,21 +52,34 @@ apiCode.properties = (table) => {
   return propsCode(columns).properties
 }
 
-apiCode.definitions = (table) => {
-  const { tableName, columns } = table
+apiCode.definitions = (table, isPrimary = true) => {
+  const { schemaName, tableName, columns } = table
+  const fullname = schemaName === tableName ? tableName : `${schemaName}${upperFirst(tableName)}`
+  const baseDefinitions = isPrimary ? 'BaseDefinitions' : 'BaseChildDefinitions'
+  const className = `${isPrimary ? upperFirst(tableName) : upperFirst(fullname)}Definitions`
+  const superCode = isPrimary ? `'${tableName}'` : `'${schemaName}', '${tableName}'`
   return template.definitions
-    .replace(/#tableName#/g, tableName)
-    .replace(/#TableDefinitions#/g, `${upperFirst(tableName)}Definitions`)
+    .replace(/#BaseDefinitions#/g, baseDefinitions)
     .replace(/#propsImport#/g, propsCode(columns).import)
     .replace(/#propsName#/g, propsCode(columns).body)
+    .replace(/#ClassName#/g, className)
+    .replace(/#superCode#/g, superCode)
 }
 
-apiCode.path = (table) => {
-  const { tableName } = table
+apiCode.path = (table, isPrimary = true) => {
+  const { schemaName, tableName } = table
+  const fullname = schemaName === tableName ? tableName : `${schemaName}${upperFirst(tableName)}`
+  const baseRoutes = isPrimary ? 'BaseRoutes' : 'BaseChildRoutes'
+  const className = `${isPrimary ? upperFirst(tableName) : upperFirst(fullname)}Routes`
+  const superCode = isPrimary ? `'${tableName}'` : `'${schemaName}', '${tableName}'`
+  const basePath = isPrimary ? tableName : schemaName
+  const tag = isPrimary ? upperFirst(tableName) : upperFirst(fullname)
   return template.path
-    .replace(/#TableRoutes#/g, `${upperFirst(tableName)}Routes`)
-    .replace(/#TableName#/g, `${upperFirst(tableName)}`)
-    .replace(/#tableName#/g, tableName)
+    .replace(/#BaseRoutes#/g, baseRoutes)
+    .replace(/#ClassName#/g, className)
+    .replace(/#superCode#/g, superCode)
+    .replace(/#basePath#/g, basePath)
+    .replace(/#Tag#/g, tag)
 }
 
 export const generateApi = ({ schemaList, outDir }) => {
@@ -62,16 +87,15 @@ export const generateApi = ({ schemaList, outDir }) => {
   const tableList = []
   schemaList.forEach((schema) => {
     const { tables } = schema
-    const ptable = tables[0]
     tables.forEach((table, tindex) => {
-      const { tableName } = table
-      // const filename = schemaName === tableName ? tableName : `${schemaName}-${tableName}`
-      const filename = tableName
+      const { schemaName, tableName } = table
+      const filename = schemaName === tableName ? tableName : `${schemaName}-${tableName}`
+      // const filename = tableName
       tableList.push(table)
       // path & definitions
       apiMap.forEach((i) => {
         writeFile({
-          buffer: apiCode[i](table, tindex === 0, ptable),
+          buffer: apiCode[i](table, tindex === 0),
           path: `${outDir}/api/${filename}/${i}`,
           filename: 'index.js',
         })
@@ -88,7 +112,7 @@ export const generateApi = ({ schemaList, outDir }) => {
       })
       // controllers
       writeFile({
-        buffer: apiCode.controllers(table),
+        buffer: apiCode.controllers(table, tindex === 0),
         path: `${outDir}/controllers`,
         filename: `${filename}.js`,
       })
