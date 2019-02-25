@@ -2,15 +2,16 @@
   "name": "ymir-cli",
   "version": "0.1.6",
   "description": "chaos cli, use to generate models",
-  "main": "bin/commander.js",
-  "scripts": {},
+  "main": "dist/bin/commander.js",
+  "scripts": {
+    "prepare": "npx babel src --out-dir dist --ignore 'src/template/project/' --copy-files --include-dotfiles"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mobiusstudio/ymir-cli.git"
   },
   "bin": {
-    "ymir": "./bin/commander.js",
-    "hi": "./bin/hi.js"
+    "ymir": "dist/bin/commander.js"
   },
   "keywords": [
     "mobius",

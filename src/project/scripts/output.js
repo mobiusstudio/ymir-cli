@@ -1,9 +1,8 @@
-import path from 'path'
-import { generateSql, generateModel, generateApi } from '../src/code'
+import { generateSql, generateModel, generateApi } from '../generater'
 import schemaList from '../ymir.config.json'
 
-export const output = (projectName) => {
-  generateSql({ schemaList, outDir: path.join(__dirname, `../../${projectName}-api/database/scripts`) })
-  generateModel({ schemaList, outDir: path.join(__dirname, `../../${projectName}-api/src/models`) })
-  generateApi({ schemaList, outDir: path.join(__dirname, `../../${projectName}-api/src`) })
+export const output = (projectName, projectPath) => {
+  generateSql({ schemaList, outDir: `${projectPath}/${projectName}-api/database/scripts` })
+  generateModel({ schemaList, outDir: `${projectPath}/${projectName}-api/src/models` })
+  generateApi({ schemaList, outDir: `${projectPath}/${projectName}-api/src` })
 }

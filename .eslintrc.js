@@ -22,4 +22,7 @@ module.exports = {
     'object-curly-newline': ['off'],
     'newline-per-chained-call': 'off',
   },
+  globals: {
+    db: true,
+  },
 }

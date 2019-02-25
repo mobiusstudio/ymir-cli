@@ -5,10 +5,14 @@ import fs from 'fs'
 import path from 'path'
 
 export class DbManager {
-  constructor({connections, version, patchPath}) {
+  constructor({ connections, version, patchPath }) {
     this.connections = connections
     this.version = version
     this.patchPath = patchPath
+    this.createBasicScipt = async () => {
+      const query = fs.readFileSync(path.resolve(__dirname, './scripts/init.sql'), 'utf8')
+      await db.query(query)
+    }
   }
 
   async dropDbIfExists() {
@@ -37,11 +41,6 @@ export class DbManager {
       await db.query('postgres', queryCreate)
       await this.createBasicScipt()
     }
-  }
-
-  async createBasicScipt() {
-    const query = fs.readFileSync(path.resolve(__dirname, './scripts/init.sql'), 'utf8')
-    await db.query(query)
   }
 
   async getCurrentVersion() {
