@@ -2,7 +2,7 @@ import fs from 'fs'
 import program from 'commander'
 import inquirer from 'inquirer'
 
-const initdb = async (configPath) => {
+export const initdb = async (configPath) => {
   try {
     console.log('Initializing...')
     const str = fs.readFileSync(configPath, 'utf8')
