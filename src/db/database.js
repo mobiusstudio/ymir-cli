@@ -61,7 +61,7 @@ const transaction = async (database, actions) => {
   }
 }
 
-export default {
+export const db = {
   configure,
   query,
   transaction,
