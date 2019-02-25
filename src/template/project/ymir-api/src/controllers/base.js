@@ -36,7 +36,7 @@ export class BaseControllers {
       try {
         const data = req.swagger.params.data.value
         global.logger.trace(`Add new ${schemaName}`, data)
-        const result = await new Model().add({
+        const result = await new Model().push({
           data,
         })
         return res.json(result)
@@ -49,7 +49,7 @@ export class BaseControllers {
       try {
         const data = req.swagger.params.data.value
         global.logger.trace(`Batch add new ${schemaName}`, data)
-        const result = await new Model().batchAdd(data)
+        const result = await new Model().batchPush(data)
         return res.json(result)
       } catch (error) {
         throw error
@@ -61,7 +61,7 @@ export class BaseControllers {
         const data = req.swagger.params.data.value
         const id = req.swagger.params.id.value
         global.logger.trace(`Update ${schemaName}`, data)
-        const result = await new Model().update({
+        const result = await new Model().push({
           data,
           pkeyValue: id,
         })
@@ -75,7 +75,7 @@ export class BaseControllers {
       try {
         const data = req.swagger.params.data.value
         global.logger.trace(`Batch update new ${schemaName}`, data)
-        const result = await new Model().batchUpdate(data)
+        const result = await new Model().batchPush(data)
         return res.json(result)
       } catch (error) {
         throw error
@@ -126,7 +126,7 @@ export class BaseChildControllers {
         const data = req.swagger.params.data.value
         const id = req.swagger.params.id.value
         global.logger.trace(`Add new ${fullname}`, data)
-        const result = await new Model().add({
+        const result = await new Model().push({
           data,
           pkeyValue: id,
         })
@@ -140,7 +140,7 @@ export class BaseChildControllers {
       try {
         const data = req.swagger.params.data.value
         global.logger.trace(`Batch add new ${fullname}`, data)
-        const result = await new Model().batchAdd(data)
+        const result = await new Model().batchPush(data)
         return res.json(result)
       } catch (error) {
         throw error
@@ -152,7 +152,7 @@ export class BaseChildControllers {
         const data = req.swagger.params.data.value
         const id = req.swagger.params.id.value
         global.logger.trace(`Update ${fullname}`, data)
-        const result = await new Model().update({
+        const result = await new Model().push({
           data,
           pkeyValue: id,
         })
@@ -166,7 +166,7 @@ export class BaseChildControllers {
       try {
         const data = req.swagger.params.data.value
         global.logger.trace(`Batch update new ${fullname}`, data)
-        const result = await new Model().batchUpdate(data)
+        const result = await new Model().batchPush(data)
         return res.json(result)
       } catch (error) {
         throw error
