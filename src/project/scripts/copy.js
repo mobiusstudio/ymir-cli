@@ -3,7 +3,7 @@ import Promise from 'bluebird'
 
 const ncp = Promise.promisify(require('ncp'))
 
-const copyApi = async (projectName, projectPath) => {
+const copyApi = async (projectPath) => {
   const exclude = [
     '.git',
     '.vscode',
@@ -20,7 +20,7 @@ const copyApi = async (projectName, projectPath) => {
     '.gitignore',
     'src/controllers/base.js',
   ]
-  const folderPath = `${projectPath}/${projectName}-api`
+  const folderPath = `${projectPath}/api`
   const options = {
     filter: filename => exclude.every(excludePath => filename.indexOf(`/ymir-api/${excludePath}`) === -1),
   }

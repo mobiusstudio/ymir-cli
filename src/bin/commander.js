@@ -7,15 +7,10 @@ const { version } = require('../../package.json')
 
 program
   .version(version)
-  .option('-t --test')
   .option('-i, --initdb [config-file-path]', 'init db with config file')
   .option('-u, --updatedb [config-file-path]', 'update db with config file')
-  .option('-c, --createProject [config-file-path]', 'create new project with config')
+  .option('-c, --createApi [config-file-path]', 'create api with config in current project')
   .parse(process.argv)
-
-if (program.test) {
-  console.log(process.env)
-}
 
 if (program.initdb) {
   const configPath = program.initdb
@@ -27,9 +22,9 @@ if (program.updatedb) {
   updatedb(configPath)
 }
 
-if (program.createProject) {
-  console.log(program.createProject)
-  const projectName = program.createProject
+if (program.createApi) {
+  console.log(program.createApi)
+  const configPath = program.createApi
   const projectPath = process.env.PWD
-  createProject(projectName, projectPath)
+  createProject(configPath, projectPath)
 }
