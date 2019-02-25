@@ -2,16 +2,15 @@
   "name": "ymir-cli",
   "version": "0.1.6",
   "description": "chaos cli, use to generate models",
-  "main": "lib/index.js",
-  "scripts": {
-    "prepare": "npx babel src --out-dir lib"
-  },
+  "main": "bin/commander.js",
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mobiusstudio/ymir-cli.git"
   },
   "bin": {
-    "ymir": "lib/index.js"
+    "ymir": "./bin/commander.js",
+    "hi": "./bin/hi.js"
   },
   "keywords": [
     "mobius",
@@ -25,13 +24,32 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "@babel/runtime": "^7.2.0",
+    "bluebird": "^3.5.3",
+    "chaos-library": "0.0.3",
+    "commander": "^2.19.0",
+    "del": "^3.0.0",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.11",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
     "pg": "^7.8.0",
     "pg-then": "^1.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3"
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0"
   },
   "homepage": "https://github.com/mobiusstudio/ymir-cli#readme"
 }

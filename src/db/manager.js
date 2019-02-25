@@ -40,7 +40,7 @@ export class DbManager {
   }
 
   async createBasicScipt() {
-    const query = fs.readFileSync(path.resolve(__dirname, '../scripts/init.sql'), 'utf8')
+    const query = fs.readFileSync(path.resolve(__dirname, './scripts/init.sql'), 'utf8')
     await db.query(query)
   }
 
