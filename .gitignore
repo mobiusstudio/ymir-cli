@@ -1,5 +1,5 @@
 # Customize
-dist/
+dist
 ymir.config.json
 *.DS_Store
 
