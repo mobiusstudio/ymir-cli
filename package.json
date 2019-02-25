@@ -1,7 +1,7 @@
 {
   "name": "ymir-cli",
-  "version": "0.1.6",
-  "description": "chaos cli, use to generate models",
+  "version": "0.2.0",
+  "description": "ymir command line, api generater & db manager",
   "main": "dist/bin/commander.js",
   "scripts": {
     "prepare": "npx babel src --out-dir dist --ignore 'src/template/project/' --copy-files --include-dotfiles"
@@ -14,11 +14,11 @@
     "ymir": "dist/bin/commander.js"
   },
   "keywords": [
-    "mobius",
+    "mobiusstu",
     "sql",
     "cli"
   ],
-  "author": "Mobiusor",
+  "author": "Mobius Studio",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mobiusstudio/ymir-cli/issues"
