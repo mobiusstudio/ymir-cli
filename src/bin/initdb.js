@@ -18,17 +18,19 @@ export const initdb = async (configPath) => {
 program
   .command('initdb')
   .description('init db with db config')
-  .action(() => {
-    const questions = [{
-      type: 'input',
-      name: 'configPath',
-      message: 'please input db config path',
-      default: './api/database/db.config.json',
-    }]
-    inquirer.prompt(questions).then((answers) => {
-      const { configPath } = answers
-      initdb(configPath)
-    })
+  .action((option) => {
+    if (option) initdb(option)
+    else {
+      const questions = [{
+        type: 'input',
+        name: 'configPath',
+        message: 'please input db config path',
+        default: './api/database/db.config.json',
+      }]
+      inquirer.prompt(questions).then((answers) => {
+        initdb(answers.configPath)
+      })
+    }
   })
 
 program.parse(process.argv)

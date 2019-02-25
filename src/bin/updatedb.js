@@ -20,17 +20,19 @@ const updatedb = async (configPath) => {
 program
   .command('updatedb')
   .description('update db with db config')
-  .action(() => {
-    const questions = [{
-      type: 'input',
-      name: 'configPath',
-      message: 'please input db config path',
-      default: './api/database/db.config.json',
-    }]
-    inquirer.prompt(questions).then((answers) => {
-      const { configPath } = answers
-      updatedb(configPath)
-    })
+  .action((configPath) => {
+    if (configPath) updatedb(configPath)
+    else {
+      const questions = [{
+        type: 'input',
+        name: 'configPath',
+        message: 'please input db config path',
+        default: './api/database/db.config.json',
+      }]
+      inquirer.prompt(questions).then((answers) => {
+        updatedb(answers.configPath)
+      })
+    }
   })
 
 program.parse(process.argv)

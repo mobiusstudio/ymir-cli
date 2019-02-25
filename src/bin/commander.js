@@ -21,5 +21,5 @@ program
 
 if (program.args.length > 0) {
   // eslint-disable-next-line import/no-dynamic-require
-  require(`./${program.args}.js`)
+  require(`./${program.args[0]}.js`)
 }
