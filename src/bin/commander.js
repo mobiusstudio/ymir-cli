@@ -1,30 +1,25 @@
 #!/usr/bin/env node
 import program from 'commander'
-import { initdb, updatedb } from './db'
-import { createProject } from './project'
+import { db } from '../db/database'
+
+global.db = db
 
 const { version } = require('../../package.json')
 
 program
+  .on('--help', () => {
+    console.log('')
+    console.log('Commands:')
+    console.log(' createApi       create api with config')
+    console.log(' initdb          init db with config')
+    console.log(' updatedb        update db with config')
+  })
+
+program
   .version(version)
-  .option('-i, --initdb [config-file-path]', 'init db with config file')
-  .option('-u, --updatedb [config-file-path]', 'update db with config file')
-  .option('-c, --createApi [config-file-path]', 'create api with config in current project')
   .parse(process.argv)
 
-if (program.initdb) {
-  const configPath = program.initdb
-  initdb(configPath)
-}
-
-if (program.updatedb) {
-  const configPath = program.updatedb
-  updatedb(configPath)
-}
-
-if (program.createApi) {
-  console.log(program.createApi)
-  const configPath = program.createApi
-  const projectPath = process.env.PWD
-  createProject(configPath, projectPath)
+if (program.args.length > 0) {
+  // eslint-disable-next-line import/no-dynamic-require
+  require(`./${program.args}.js`)
 }
