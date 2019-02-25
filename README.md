@@ -12,7 +12,6 @@ npm init
 npm install ymir-cli
 ./node_modules/.bin/ymir --help
 ./node_modules/.bin/ymir createApi
-./node_modules/.bin/ymir initdb
 ```
 
 ```

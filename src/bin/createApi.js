@@ -1,10 +1,8 @@
+/* eslint-disable no-shadow */
 import program from 'commander'
 import inquirer from 'inquirer'
 import { build } from '../project/scripts/build'
-
-const createProject = async (configPath, projectPath, dbconfig) => {
-  await build(configPath, projectPath, dbconfig)
-}
+import { initdb } from './initdb'
 
 program
   .command('createApi')
@@ -47,7 +45,7 @@ program
       message: 'please input database password',
       default: 'postgres',
     }]
-    inquirer.prompt(questions).then((answers) => {
+    inquirer.prompt(questions).then(async (answers) => {
       const { configPath, projectName, dbname, host, port, username, password } = answers
       const projectPath = process.env.PWD
       const dbconfig = {
@@ -58,7 +56,17 @@ program
         username,
         password,
       }
-      createProject(configPath, projectPath, dbconfig)
+      await build(configPath, projectPath, dbconfig)
+      const questions = [{
+        type: 'input',
+        name: 'configPath',
+        message: 'please input db config path',
+        default: './api/database/db.config.json',
+      }]
+      inquirer.prompt(questions).then((answers) => {
+        const { configPath } = answers
+        initdb(configPath)
+      })
     })
   })
 

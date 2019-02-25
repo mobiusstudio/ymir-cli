@@ -1,7 +1,7 @@
-# Customize
-dist
-ymir.config.json
 .DS_Store
+src/config/*.json
+
+build/
 
 # Logs
 logs
