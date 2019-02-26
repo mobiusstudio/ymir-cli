@@ -25,8 +25,19 @@ export class BaseControllers {
       try {
         const id = req.swagger.params.id.value
         global.logger.trace(`Get ${schemaName}`, id)
-        const object = await new Model().from().where`id = ${id}`.do()
+        const object = await new Model().get(id)
         return res.json(object)
+      } catch (error) {
+        throw error
+      }
+    }
+
+    this[`batchGet${upperFirst(schemaName)}`] = async (req, res) => {
+      try {
+        const data = req.swagger.params.data.value
+        global.logger.trace(`Batch get ${schemaName}`, data)
+        const result = await new Model().batchGet(data)
+        return res.json(result)
       } catch (error) {
         throw error
       }
@@ -96,7 +107,7 @@ export class BaseControllers {
     this[`batchDelete${upperFirst(schemaName)}`] = async (req, res) => {
       try {
         const data = req.swagger.params.data.value
-        global.logger.trace('Batch delete task', data)
+        global.logger.trace(`Batch delete ${schemaName}`, data)
         const result = await new Model().batchDelete(data)
         return res.json(result)
       } catch (error) {
@@ -114,8 +125,19 @@ export class BaseChildControllers {
       try {
         const id = req.swagger.params.id.value
         global.logger.trace(`Get ${fullname}`, id)
-        const object = await new Model().from().where`id = ${id}`.do()
+        const object = await new Model().get(id)
         return res.json(object)
+      } catch (error) {
+        throw error
+      }
+    }
+
+    this[`batchGet${upperFirst(fullname)}`] = async (req, res) => {
+      try {
+        const data = req.swagger.params.data.value
+        global.logger.trace(`Batch get ${fullname}`, data)
+        const result = await new Model().batchGet(data)
+        return res.json(result)
       } catch (error) {
         throw error
       }
@@ -187,7 +209,7 @@ export class BaseChildControllers {
     this[`batchDelete${upperFirst(fullname)}`] = async (req, res) => {
       try {
         const data = req.swagger.params.data.value
-        global.logger.trace('Batch delete task', data)
+        global.logger.trace(`Batch delete ${fullname}`, data)
         const result = await new Model().batchDelete(data)
         return res.json(result)
       } catch (error) {

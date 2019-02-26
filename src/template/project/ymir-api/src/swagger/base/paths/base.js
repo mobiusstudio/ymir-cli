@@ -24,6 +24,8 @@ export class BaseRoutes {
       required: true,
     }
 
+    const batchGetContent = new DataContent('batchGet', schemaName)
+
     const addContent = new DataContent('add', schemaName)
 
     const batchAddContent = new DataContent('batchAdd', schemaName)
@@ -61,6 +63,12 @@ export class BaseRoutes {
     }
     // eslint-disable-next-line dot-notation
     this['batch'] = {
+      get: {
+        operationId: `batchGet${upperFirst(schemaName)}`,
+        summary: `Batch get ${schemaName}`,
+        ...generalDescription,
+        parameters: [batchGetContent],
+      },
       post: {
         operationId: `batchAdd${upperFirst(schemaName)}`,
         summary: `Batch add new ${schemaName}`,
@@ -69,13 +77,13 @@ export class BaseRoutes {
       },
       patch: {
         operationId: `batchUpdate${upperFirst(schemaName)}`,
-        summary: `Batch update new ${schemaName}`,
+        summary: `Batch update ${schemaName}`,
         ...generalDescription,
         parameters: [batchUpdateContent],
       },
       delete: {
         operationId: `batchDelete${upperFirst(schemaName)}`,
-        summary: `Batch delete new ${schemaName}`,
+        summary: `Batch delete ${schemaName}`,
         ...generalDescription,
         parameters: [batchDeleteContent],
       },
@@ -115,6 +123,8 @@ export class BaseChildRoutes {
       in: 'path',
       required: true,
     }
+
+    const batchGetContent = new DataContent('batchGet', fullname)
 
     const addContent = new DataContent('add', fullname)
 
@@ -165,6 +175,12 @@ export class BaseChildRoutes {
     }
     // eslint-disable-next-line dot-notation
     this[`${schemaName}/batch`] = {
+      get: {
+        operationId: `batchGet${upperFirst(fullname)}`,
+        summary: `Batch get ${fullname}`,
+        ...generalDescription,
+        parameters: [batchGetContent],
+      },
       post: {
         operationId: `batchAdd${upperFirst(fullname)}`,
         summary: `Batch add new ${fullname}`,
@@ -173,13 +189,13 @@ export class BaseChildRoutes {
       },
       patch: {
         operationId: `batchUpdate${upperFirst(fullname)}`,
-        summary: `Batch update new ${fullname}`,
+        summary: `Batch update ${fullname}`,
         ...generalDescription,
         parameters: [batchUpdateContent],
       },
       delete: {
         operationId: `batchDelete${upperFirst(fullname)}`,
-        summary: `Batch delete new ${fullname}`,
+        summary: `Batch delete ${fullname}`,
         ...generalDescription,
         parameters: [batchDeleteContent],
       },

@@ -2,6 +2,16 @@ import { upperFirst } from 'lodash'
 
 export class BaseDefinitions {
   constructor(schemaName, requestBody) {
+    this[`batchGet${upperFirst(schemaName)}Request`] = {
+      description: 'batch get request',
+      type: 'array',
+      items: {
+        description: 'id',
+        type: 'integer',
+        format: 'int64',
+      },
+    }
+
     this[`add${upperFirst(schemaName)}Request`] = {
       description: `create ${schemaName} request`,
       properties: requestBody,
@@ -49,6 +59,16 @@ export class BaseDefinitions {
 export class BaseChildDefinitions {
   constructor(fatherName, schemaName, requestBody) {
     const fullname = `${fatherName}${upperFirst(schemaName)}`
+
+    this[`batchGet${upperFirst(fullname)}Request`] = {
+      description: 'batch get request',
+      type: 'array',
+      items: {
+        description: 'id',
+        type: 'integer',
+        format: 'int64',
+      },
+    }
 
     this[`add${upperFirst(fullname)}Request`] = {
       description: `create ${fullname} request`,
