@@ -17,12 +17,12 @@ template.db =
         "default": true
       },
       "postgres": {
-        "db": "postgres",
-        "host": "localhost",
-        "port": 5432,
+        "db": "#managedb#",
+        "host": "#host#",
+        "port": #port#,
         "credentials": {
-          "username": "postgres",
-          "password": "postgres"
+          "username": "#musername#",
+          "password": "#mpassword#"
         }
       }
     }

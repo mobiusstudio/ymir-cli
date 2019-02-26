@@ -20,3 +20,5 @@ ymir createApi
 cd api
 npm start
 ```
+
+customize default api config in ./dist/bin/config.json

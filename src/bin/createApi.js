@@ -9,44 +9,60 @@ program
   .description('create a new api project')
   .action(() => {
     console.log('creating...')
+    const def = require('./config.json').defaultApi
     const questions = [{
       type: 'input',
       name: 'configPath',
       message: 'please input api config path',
-      default: './api.config.json',
+      default: def.configPath,
     }, {
       type: 'input',
       name: 'projectName',
       message: 'please input project name',
-      default: 'myproject',
+      default: def.projectName,
     }, {
       type: 'input',
       name: 'dbname',
       message: 'please input database name',
-      default: 'mydatabase',
+      default: def.dbname,
     }, {
       type: 'input',
       name: 'host',
       message: 'please input database host',
-      default: 'localhost',
+      default: def.host,
     }, {
       type: 'input',
       name: 'port',
       message: 'please input database port',
-      default: '5432',
+      default: def.port,
     }, {
       type: 'input',
       name: 'username',
       message: 'please input database username',
-      default: 'postgres',
+      default: def.username,
     }, {
       type: 'input',
       name: 'password',
       message: 'please input database password',
-      default: 'postgres',
+      default: def.password,
+    }, {
+      type: 'input',
+      name: 'managedb',
+      message: 'please input manage database',
+      default: def.managedb,
+    }, {
+      type: 'input',
+      name: 'musername',
+      message: 'please input manage username',
+      default: def.musername,
+    }, {
+      type: 'input',
+      name: 'mpassword',
+      message: 'please input manage password',
+      default: def.mpassword,
     }]
     inquirer.prompt(questions).then(async (answers) => {
-      const { configPath, projectName, dbname, host, port, username, password } = answers
+      const { configPath, projectName, dbname, host, port, username, password, managedb, musername, mpassword } = answers
       const projectPath = process.env.PWD
       const dbconfig = {
         projectName,
@@ -55,6 +71,9 @@ program
         port,
         username,
         password,
+        managedb,
+        musername,
+        mpassword,
       }
       await build(configPath, projectPath, dbconfig)
       const questions = [{

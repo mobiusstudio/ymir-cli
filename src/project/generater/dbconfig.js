@@ -2,7 +2,7 @@ import { template } from '../../template/dbconfig.template'
 import { writeFile } from './generate'
 
 const dbCode = (dbconfig) => {
-  const { projectName, dbname, host, port, username, password } = dbconfig
+  const { projectName, dbname, host, port, username, password, managedb, musername, mpassword } = dbconfig
   return template.db
     .replace(/#projectName#/g, projectName)
     .replace(/#dbname#/g, dbname)
@@ -10,6 +10,9 @@ const dbCode = (dbconfig) => {
     .replace(/#port#/g, port)
     .replace(/#username#/g, username)
     .replace(/#password#/g, password)
+    .replace(/#managedb#/g, managedb)
+    .replace(/#musername#/g, musername)
+    .replace(/#mpassword#/g, mpassword)
 }
 
 const apiCode = (dbconfig) => {
