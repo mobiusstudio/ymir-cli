@@ -1,10 +1,8 @@
 import { assemblePath } from '../utils'
-import { test } from './test'
 
 const basePath = ''
 
 const routes = {
-  test,
 }
 
 export const paths = assemblePath(routes, basePath)

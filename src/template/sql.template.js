@@ -7,11 +7,16 @@ template.schema =
 --------------------------------
 
 CREATE SCHEMA "#schemaName#";
+#sequenceCode#
+#tablesCode#
+`
 
+template.sequence =
+`
 CREATE SEQUENCE "#schemaName#".#schemaName#_id_seq;
 
 CREATE OR REPLACE FUNCTION "#schemaName#".#schemaName#_id
-(OUT result bigint) AS $$
+(OUT result bigint) AS $$$$
 DECLARE
   our_epoch bigint := 1466352806721;
   seq_id bigint;
@@ -29,9 +34,7 @@ result := result |
   result := result |
 (seq_id);
 END;
-$$ LANGUAGE PLPGSQL;
-
-#tablesCode#
+$$$$ LANGUAGE PLPGSQL;
 `
 
 template.table =

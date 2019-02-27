@@ -3,6 +3,8 @@ import { typeMap as T } from 'chaos-library'
 import { template } from '../../template/sql.template'
 import { generate } from './generate'
 
+let autoId = false
+
 const snakeCaseSchema = (schema) => {
   const tempSchema = cloneDeep(schema)
   const { schemaName, tables } = tempSchema
@@ -48,7 +50,11 @@ const pkeyCode = (pkey) => {
   const arr = []
   arr.push(name)
   switch (type) {
-    case 'id-auto': arr.push(T.get(type).sql(schemaName)); break
+    case 'id-auto': {
+      autoId = true
+      arr.push(T.get(type).sql(schemaName))
+      break
+    }
     case 'id-seq': arr.push(T.get(type).sql()); break
     default: arr.push(T.get(type).sql({ req: true, def })); break
   }
@@ -67,6 +73,7 @@ const columnCode = (column) => {
 }
 
 const columnsCode = (columns) => {
+  if (!columns || columns.length === 0) return '-- blank table --'
   const arr = []
   columns.forEach((column) => {
     arr.push(columnCode(column))
@@ -94,9 +101,15 @@ const tablesCode = (tables) => {
   return arr.join('\n')
 }
 
+const sequenceCode = schemaName => autoId ? template.sequence.replace(/#schemaName#/g, schemaName) : ''
+
 export const sqlCode = (schema) => {
+  autoId = false
   const { schemaName, tables } = snakeCaseSchema(schema)
-  return template.schema.replace(/#schemaName#/g, schemaName).replace(/#tablesCode#/g, tablesCode(tables))
+  return template.schema
+    .replace(/#schemaName#/g, schemaName)
+    .replace(/#tablesCode#/g, tablesCode(tables))
+    .replace(/#sequenceCode#/g, sequenceCode(schemaName))
 }
 
 export const generateSql = ({ schemaList, outDir }) => (generate({
